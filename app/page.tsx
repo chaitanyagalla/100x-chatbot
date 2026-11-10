@@ -100,7 +100,7 @@ export default function Home() {
 
   return (
     <main className="stage-shell">
-      <h1 className="eyebrow">Chaitanya · AI interview voice bot</h1>
+      <h1 className="eyebrow">Chaitanya · AI voice bot</h1>
 
       <section className="stage" aria-label="Voice conversation">
         <div className="side">
@@ -173,12 +173,6 @@ export default function Home() {
           Send
         </button>
       </form>
-
-      <p className="fine-print">
-        Voice works best in Chrome or Edge; typing works everywhere. Answers are based on details
-        Chaitanya provided, and AI can make mistakes. Your browser may send audio to its speech
-        service; the question text is sent to NVIDIA.
-      </p>
     </main>
   );
 }

@@ -194,8 +194,6 @@ input:disabled { color: #93a3ab; }
 
 .send-button:disabled { background: #2a343b; color: #93a3ab; cursor: not-allowed; }
 
-.fine-print { text-align: center; color: #93a3ab; font-size: 0.75rem; }
-
 @media (max-width: 480px) {
   .face { width: 46vw; }
   .transcript { font-size: 0.95rem; }
