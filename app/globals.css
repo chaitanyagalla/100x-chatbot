@@ -1,0 +1,202 @@
+:root {
+  color-scheme: dark;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #e8edf0;
+  background: #0d1216;
+}
+
+* { box-sizing: border-box; }
+
+/* Dark backdrop with a soft green glow behind the AI and an orange glow behind the interviewer. */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 22% 38%, rgba(37, 201, 0, 0.16), transparent 42%),
+    radial-gradient(circle at 78% 38%, rgba(255, 90, 0, 0.16), transparent 42%),
+    linear-gradient(180deg, #0d1216, #141c22);
+  background-attachment: fixed;
+}
+
+button, input { font: inherit; }
+
+p { margin: 0; line-height: 1.6; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.stage-shell {
+  width: min(100% - 2rem, 1280px);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.eyebrow {
+  margin: 0;
+  text-align: center;
+  color: #93a3ab;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Two halves: the AI on the left, the interviewer on the right. */
+.stage {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0 0.5rem;
+  text-align: center;
+}
+
+.face {
+  width: min(42vw, 48vh, 420px);
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.face-ai { color: #3ee01a; }
+.face-user { color: #ff6a1a; }
+.face:disabled { cursor: not-allowed; }
+.face-user:disabled { opacity: 0.45; }
+.face:focus-visible, input:focus-visible, .send-button:focus-visible { outline: 3px solid #7fd3ff; outline-offset: 3px; }
+
+.face-art {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 7;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 10px currentColor);
+}
+
+/* The lines stay hidden until the face is listening, thinking, or answering. */
+.face-lines {
+  opacity: 0;
+  transform-origin: 100px 100px;
+  transition: opacity 0.2s;
+}
+
+.face[data-state="listening"] .face-lines,
+.face[data-state="thinking"] .face-lines,
+.face[data-state="speaking"] .face-lines {
+  opacity: 1;
+  animation: pulse 0.7s ease-in-out infinite alternate;
+}
+
+.face[data-state="thinking"] .face-lines { animation-duration: 1.4s; }
+
+@keyframes pulse {
+  from { transform: scale(0.94); opacity: 0.45; }
+  to { transform: scale(1.04); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .face-lines { animation: none !important; }
+}
+
+.side-name { font-size: 1.125rem; font-weight: 700; }
+.side-status { min-height: 1.6em; color: #93a3ab; font-size: 0.875rem; }
+
+/* Latest question and answer, centred under both faces. */
+.transcript {
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: 1rem 1.25rem;
+  display: grid;
+  gap: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  font-size: 1.05rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.transcript-empty { text-align: center; color: #93a3ab; font-size: 0.9rem; }
+
+.who {
+  display: inline-block;
+  min-width: 2.5rem;
+  margin-right: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.who-ai { color: #3ee01a; }
+.who-user { color: #ff6a1a; }
+
+.notice {
+  width: min(100%, 820px);
+  margin: 0 auto;
+  padding: 0.85rem 1rem;
+  border: 1px solid #a34a3d;
+  border-radius: 0.5rem;
+  color: #ffd9d2;
+  background: #3a1a15;
+}
+
+.type-row {
+  display: flex;
+  gap: 0.75rem;
+  width: min(100%, 560px);
+  margin: 0 auto;
+}
+
+input {
+  min-width: 0;
+  flex: 1;
+  padding: 0.75rem 1rem;
+  color: #e8edf0;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid #55656e;
+  border-radius: 2rem;
+}
+
+input::placeholder { color: #93a3ab; }
+input:disabled { color: #93a3ab; }
+
+.send-button {
+  padding: 0.75rem 1.25rem;
+  border: 0;
+  border-radius: 2rem;
+  background: #e8edf0;
+  color: #0d1216;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.send-button:disabled { background: #2a343b; color: #93a3ab; cursor: not-allowed; }
+
+.fine-print { text-align: center; color: #93a3ab; font-size: 0.75rem; }
+
+@media (max-width: 480px) {
+  .face { width: 46vw; }
+  .transcript { font-size: 0.95rem; }
+}
